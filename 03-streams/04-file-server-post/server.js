@@ -29,10 +29,12 @@ server.on('request', (req, res) => {
         if (error.code === 'LIMIT_EXCEEDED') {
           res.statusCode = 413;
           res.end('file is too big');
+          limitSizeStream.destroy();
           writeStream.destroy();
           return fs.unlink(filepath, (error)=>{});
         }
         res.statusCode = 500;
+        limitSizeStream.destroy();
         writeStream.destroy();
         res.end('internal error');
       });
@@ -43,6 +45,7 @@ server.on('request', (req, res) => {
           return res.end('file already exist');
         }
         res.statusCode = 500;
+        limitSizeStream.destroy();
         writeStream.destroy();
         res.end('internal error');
       });
