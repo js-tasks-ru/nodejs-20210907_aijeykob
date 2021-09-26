@@ -39,9 +39,11 @@ server.on('request', (req, res) => {
       writeStream.on('error', (error)=> {
         if (error.code === 'EEXIST') {
           res.statusCode = 409;
+          writeStream.destroy();
           return res.end('file already exist');
         }
         res.statusCode = 500;
+        writeStream.destroy();
         res.end('internal error');
       });
       req.on('aborted', ()=> {
