@@ -21,7 +21,7 @@ server.on('request', (req, res) => {
       const writeStream = fs.createWriteStream(filepath, {flags: 'wx'});
       const limitSizeStream = new LimitSizeStream({limit: 10000});
       req.pipe(limitSizeStream).pipe(writeStream);
-      writeStream.on('close', ()=> {
+      writeStream.on('finish', ()=> {
         res.statusCode = 201;
         res.end('file saved');
       });
