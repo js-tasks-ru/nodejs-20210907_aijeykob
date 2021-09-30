@@ -27,17 +27,6 @@ server.on('request', (req, res) => {
         res.end('internal error');
       });
       break;
-    case 'DELETE':
-      fs.unlink(filepath, (err) => {
-        if (!err) return res.end('file deleted');
-        if (err.code === 'ENOENT') {
-          res.statusCode = 404;
-          return res.end('file not found');
-        }
-        res.statusCode = 500;
-        res.end('internal error');
-      });
-      break;
     default:
       res.statusCode = 501;
       res.end('Not implemented');
