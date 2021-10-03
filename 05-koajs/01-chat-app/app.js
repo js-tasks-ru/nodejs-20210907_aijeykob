@@ -21,12 +21,11 @@ router.get('/subscribe', async (ctx) => {
 
 router.post('/publish', async (ctx) => {
   if (!ctx.request.body.message || !toString(ctx.request.body.message).trim()) {
-    return ctx.stats = 422;
+    return ctx.throw(422);
   }
-  await resolveArr.map((fn) => fn(ctx.request.body.message));
+  resolveArr.map((fn) => fn(ctx.request.body.message));
   resolveArr=[];
-  ctx.stats = 201;
-  ctx.body = {a: 1};
+  ctx.status = 201;
 });
 
 app.use(router.routes());
