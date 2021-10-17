@@ -31,5 +31,7 @@ const productSchema = new mongoose.Schema({
   images: [String],
 
 });
-
+productSchema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
 module.exports = connection.model('Product', productSchema);

@@ -7,7 +7,9 @@ const subCategorySchema = new mongoose.Schema({
     required: true,
   },
 });
-
+subCategorySchema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
 const categorySchema = new mongoose.Schema({
   title: {
     type: String,
@@ -16,5 +18,10 @@ const categorySchema = new mongoose.Schema({
 
   subcategories: [subCategorySchema],
 });
+
+categorySchema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
 
 module.exports = connection.model('Category', categorySchema);
